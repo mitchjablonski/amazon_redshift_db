@@ -21,3 +21,5 @@
 ### Delete Redshift Cluster
 #### Clean up our resources at completion
 
+### Running the Pipeline
+#### To start, we will run the generate_redshift_cluster notebook, this will stand up our cluster and generate our iam role, with the correct policy.  When the cluster shows available, we will be able to start testing against it.  From there, we can jump over to the run_pipeline.ipynb, this brings in the main function from create_tables, which will drop any tables if they exist and then regenerate them.  After the tables are deleted/recreated we will begin the ETL process, this will perform the copy from s3 into our redshift cluster, then, once the data is copied into our cluster, we will execute our insert statements, where we query against the data we copied into redshift.  Additionally, we have some very basic queries to run at the end of the notebook to ensure population has occured.  Finally, when we are done with our redshift cluster, we can run the delete_redshift_cluster.ipynb.  This will go ahead, and remove the iam role that we generated, as well as spinning the cluster down.

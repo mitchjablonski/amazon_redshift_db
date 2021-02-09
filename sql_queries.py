@@ -58,7 +58,7 @@ staging_songs_table_create = ("""CREATE  TABLE IF NOT EXISTS staging_songs(
 
 songplay_table_create = ("""CREATE TABLE IF NOT EXISTS songplay(
                             songplay_id INT IDENTITY(0,1) PRIMARY KEY,
-                            start_time TIMESTAMP,
+                            start_time TIMESTAMP NOT NULL,
                             user_id INTEGER NOT NULL,
                             level TEXT,
                             song_id TEXT,
@@ -126,7 +126,8 @@ songplay_table_insert = ("""INSERT INTO songplay(start_time, user_id, level, son
 user_table_insert = ("""INSERT INTO users(user_id, first_name, last_name, gender, level)
                         SELECT user_id, first_name, last_name, gender, level
                         FROM staging_events
-                        WHERE user_id IS NOT NULL
+                        WHERE user_id IS NOT NULL and
+                        page = 'NextSong'
 """)
 
 song_table_insert = ("""INSERT INTO songs(song_id, title, artist_id, year, duration)
@@ -146,7 +147,8 @@ time_table_insert = ("""INSERT INTO time(start_time, hour, day, week, month, yea
                         extract(day from start_time), extract(week from start_time), extract(month from start_time), 
                         extract(year from start_time), extract(dayofweek from start_time)
                         FROM staging_events
-                        WHERE start_time IS NOT NULL
+                        WHERE start_time IS NOT NULL and
+                        page = 'NextSong'
 """)
 
 # QUERY LISTS
