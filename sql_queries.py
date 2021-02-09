@@ -124,7 +124,7 @@ songplay_table_insert = ("""INSERT INTO songplay(start_time, user_id, level, son
 """)
 
 user_table_insert = ("""INSERT INTO users(user_id, first_name, last_name, gender, level)
-                        SELECT user_id, first_name, last_name, gender, level
+                        SELECT DISTINCT user_id, first_name, last_name, gender, level
                         FROM staging_events
                         WHERE user_id IS NOT NULL and
                         page = 'NextSong'
